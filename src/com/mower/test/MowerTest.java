@@ -53,7 +53,6 @@ public class MowerTest {
 	
 	@Test
 	public void testMowLawn3() {
-		
 		StandardMower mower=new StandardMower(lawn3, m3);
 		mower.mowLawn();
 		System.err.println(mower.getFootPrint().toString());
