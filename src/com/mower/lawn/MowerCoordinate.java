@@ -4,6 +4,7 @@ public class MowerCoordinate extends Coordinate {
 
 
 	private int facing=0;
+	private int rotationCount=0;
 
 	public MowerCoordinate(int x, int y, int facing) {
 		super(x, y);
@@ -13,49 +14,67 @@ public class MowerCoordinate extends Coordinate {
 	public MowerCoordinate turn(char dir)
 	{
 		dir=Character.toUpperCase(dir);
-		MowerCoordinate destination=new MowerCoordinate(this.x, this.y, this.facing);
+		//MowerCoordinate destination=new MowerCoordinate(this.x, this.y, this.facing);
 		
 		switch(dir)
 		{
 			case 'L':
-				destination.facing-=90;
+				this.facing-=90;
 				break;
 			case 'R':
-				destination.facing+=90;
+				this.facing+=90;
 				break;
 			default:
 				break;
 		}
 		
-		if(destination.facing<0)destination.facing+=360;
+		if(this.facing<0)this.facing+=360;
 		
-		return destination;
+		return this;
 	}
 
 	public MowerCoordinate move() {
 		
-		MowerCoordinate destination=new MowerCoordinate(this.x, this.y, this.facing);
+	//	MowerCoordinate destination=new MowerCoordinate(this.x, this.y, this.facing);
 		
 		int dir=(facing/90)%4;
 		
 		switch (dir) {
 			case 0:
-				destination.y += 1;
+				this.y += 1;
 				break;
 			case 2:
-				destination.y-=1;
+				this.y-=1;
 				break;
 			case 3:
-				destination.x-=1;
+				this.x-=1;
 				break;
 			case 1:
-				destination.x+=1;
+				this.x+=1;
 			default:
 				break;
 		}
-		return destination;
+		return this;
 
 	}
+	
+	public MowerCoordinate rotateRight() {
+		this.facing+=90;
+	//	if(this.facing<0)this.facing+=360;
+		this.rotationCount++;
+		return this;
+	}
+	
+	public int getRotationCount()
+	{
+		return this.rotationCount;
+	}
+	
+	public void resetRotationCount()
+	{
+		this.rotationCount=0;
+	}
+	
 	
 	public static String getFacingText(int facing)
 	{
@@ -83,6 +102,14 @@ public class MowerCoordinate extends Coordinate {
 //				+ "]";
 		
 		return x+" "+y+" "+getFacingText(this.facing);
+	}
+	
+	public MowerCoordinate getCopy()
+	{
+		MowerCoordinate m=new MowerCoordinate(x, y, facing);
+		m.rotationCount=this.rotationCount;
+		return m;
+		
 	}
 	
 
