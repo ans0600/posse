@@ -26,7 +26,7 @@ public class StandardMower extends Mower {
 	}
 	
 	
-	 public boolean executeCommand() throws FatalException
+	 public boolean executeCommand()
 	 {
 		 if(this.command!=null)
 		 {

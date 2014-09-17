@@ -75,7 +75,7 @@ public abstract class Mower {
 		
 	}
 	
-	abstract public boolean executeCommand() throws FatalException;
+	abstract public boolean executeCommand();
 	
 	abstract public void mowLawn();
 	
