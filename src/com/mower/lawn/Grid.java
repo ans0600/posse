@@ -2,42 +2,27 @@ package com.mower.lawn;
 
 public class Grid {
 
-	protected int boundryX;
-	
-	protected int boundryY;
+	protected Coordinate boundry;
 	
 	protected boolean[][] visited;
 	
-	public Grid(int boundryX,int boundryY)
+	public Grid(Coordinate boundry)
 	{
-		this.boundryX=boundryX;
-		this.boundryY=boundryY;
+		//this.boundryX=boundryX;
+		//this.boundryY=boundryY;
+		this.boundry=boundry;
 		//TODO double check
-		this.visited=new boolean[boundryX+1][boundryY+1];
+		this.visited=new boolean[this.boundry.getX()+1][this.boundry.getY()+1];
 		//TODO set init point to visited
 		this.visited[0][0]=true;
 	}
 	
-	public boolean isInside(MowerCoordinate coordinate)
+	public boolean isInside(Coordinate coordinate)
 	{
-		return coordinate.getX()<=this.boundryX&&coordinate.getY()<=this.boundryY
+		return coordinate.getX()<=this.boundry.getX()&&coordinate.getY()<=this.boundry.getY()
 				&&coordinate.getX()>=0&&coordinate.getY()>=0;	
 	}
 	
-	public MowerCoordinate getAdjacentCoordinate(MowerCoordinate origin)
-	{
-		MowerCoordinate dest=origin.move();
-		
-		if(this.isInside(dest)&&!this.visited[origin.x][origin.y])
-		{
-			this.visited[origin.x][origin.y]=true;
-			return dest;
-			
-		}else
-		{
-			return null;
-		}
-		
-	}
+	
 	
 }

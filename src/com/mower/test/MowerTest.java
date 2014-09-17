@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.mower.StandardMower;
+import com.mower.lawn.Coordinate;
 import com.mower.lawn.Lawn;
 import com.mower.lawn.MowerCoordinate;
 
@@ -21,11 +22,11 @@ public class MowerTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		lawn1=new Lawn(2,2);
+		lawn1=new Lawn(new Coordinate(2, 2));
 		m1=new MowerCoordinate(0, 0, 0);
-		lawn2=new Lawn(0,4);
+		lawn2=new Lawn(new Coordinate(0, 4));
 		m2=new MowerCoordinate(0, 0, 0);
-		lawn3=new Lawn(1,5);
+		lawn3=new Lawn(new Coordinate(1, 5));
 		m3=new MowerCoordinate(0, 0, 0);
 	}
 

@@ -27,10 +27,10 @@ public class MowerCoordinateTest {
 		
 		MowerCoordinate c=new MowerCoordinate(1, 2, 0);
 		
-		MowerCoordinate dest=c.turn('L').move()
-				.turn('L').move()
-				.turn('L').move()
-				.turn('L').move().move();
+		MowerCoordinate dest=c.action('L').action('M')
+				.action('L').action('M')
+				.action('L').action('M')
+				.action('L').action('M').action('M');
 		
 
 		assertTrue(dest.toString().equals("1 3 N"));
@@ -42,9 +42,9 @@ public class MowerCoordinateTest {
 		
 		MowerCoordinate c=new MowerCoordinate(3, 3, 90);
 		
-		MowerCoordinate dest=c.move().move().turn('R')
-				.move().move().turn('R')
-				.move().turn('R').turn('R').move();
+		MowerCoordinate dest=c.action('M').action('M').action('R')
+				.action('M').action('M').action('R')
+				.action('M').action('R').action('R').action('M');
 		
 		assertTrue(dest.toString().equals("5 1 E"));
 	}

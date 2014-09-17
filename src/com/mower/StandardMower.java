@@ -5,22 +5,18 @@ import java.util.LinkedList;
 import com.mower.exception.FatalException;
 import com.mower.lawn.Lawn;
 import com.mower.lawn.MowerCoordinate;
+import com.mower.lawn.MowerCoordinate.CoordinateType;
 
 
-public class StandardMower implements Mower {
+public class StandardMower extends Mower {
 
-	
-	protected Lawn lawn;
-	protected MowerCoordinate initPosition;
-	protected MowerCoordinate destPosition;
-	
-	protected LinkedList<String> footPrint;
-	
-	
-	public enum TurnCMD {
-		L,R
+
+	public StandardMower(MowerCoordinate initPosition)
+	{
+		this.initPosition=initPosition;
+		this.footPrint=new LinkedList<String>();		
 	}
-
+	
 	public StandardMower(Lawn lawn,MowerCoordinate initPosition)
 	{
 		this.lawn=lawn;
@@ -30,28 +26,24 @@ public class StandardMower implements Mower {
 	}
 	
 	
-	public boolean move(String commandStr) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	 public boolean executeCommand() throws FatalException
+	 {
+		 if(this.command!=null)
+		 {
+			 String cmd=this.command.poll();
+			 if(cmd!=null)
+			 {
+				 this.destPosition=this.initPosition.getCopy().action(cmd.charAt(0));
+				 this.destPosition.setType(CoordinateType.END);
+				 return true;
+			 }
+			 
+		 }
+		 return false;
+	 }
 
 
-	public boolean move(char command) throws FatalException {
-		
-		if(!this.validateCommand(command))throw new FatalException("Invalid Command: "+command);
-	
-		
-		return false;
-	}
 
-
-	public MowerCoordinate getCurrentLocation() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-	
 	public void mowLawn()
 	{
 		if(this.destPosition==null)this.destPosition=this.initPosition;
@@ -61,6 +53,7 @@ public class StandardMower implements Mower {
 		
 		
 		MowerCoordinate pos=this.lawn.getAdjacentCoordinate(this.destPosition.getCopy());
+		
 		
 		if(pos==null&&this.destPosition.getRotationCount()==4)
 		{
@@ -77,6 +70,7 @@ public class StandardMower implements Mower {
 			this.destPosition.rotateRight();
 		}else
 		{
+			pos.setType(CoordinateType.END);
 			this.footPrint.add("M");
 			this.destPosition=pos;
 			this.destPosition.resetRotationCount();
@@ -90,17 +84,6 @@ public class StandardMower implements Mower {
 	}
 	
 	
-	private boolean validateCommand(char command)
-	{
-		for (TurnCMD f : TurnCMD.values())
-		{
-			if(f.name().equals(command))
-			{				
-				return true;
-			}		
-		}
-		return false;
-		
-	}
+	
 
 }
