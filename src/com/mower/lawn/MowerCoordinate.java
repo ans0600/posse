@@ -129,11 +129,11 @@ public class MowerCoordinate extends Coordinate {
 	}
 	
 	
-	public static String getFacingText(int facing)
+	public String getFacingText()
 	{
-		facing=(facing/90)%4;
+		int dir=(this.facing/90)%4;
 		
-		switch (facing) {
+		switch (dir) {
 			case 0:
 				return "N";
 			case 2:
@@ -151,7 +151,7 @@ public class MowerCoordinate extends Coordinate {
 
 	@Override
 	public String toString() {		
-		return x+" "+y+" "+getFacingText(this.facing);
+		return x+" "+y+" "+this.getFacingText();
 	}
 	
 	
@@ -163,7 +163,32 @@ public class MowerCoordinate extends Coordinate {
 		return m;
 		
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + x;
+		result = prime * result + y;
+		return result;
+	}
 
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Coordinate other = (Coordinate) obj;
+		if (x != other.x)
+			return false;
+		if (y != other.y)
+			return false;
+		return true;
+	}
 	
 	
 	

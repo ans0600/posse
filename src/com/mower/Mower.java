@@ -6,6 +6,7 @@ import java.util.Queue;
 import com.mower.exception.FatalException;
 import com.mower.lawn.Lawn;
 import com.mower.lawn.MowerCoordinate;
+import com.mower.lawn.MowerCoordinate.CoordinateType;
 
 public abstract class Mower {
 
@@ -19,6 +20,8 @@ public abstract class Mower {
 		}
 	}
 	
+	protected int id;
+	
 	protected Lawn lawn;
 	protected MowerCoordinate initPosition;
 	protected MowerCoordinate destPosition;
@@ -28,11 +31,18 @@ public abstract class Mower {
 	protected Queue<String> command;
 	
 	
+	public Mower(MowerCoordinate initPosition)
+	{
+		this.initPosition=initPosition;
+		this.destPosition=this.initPosition.getCopy();
+		this.destPosition.setType(CoordinateType.END);
+	}
+	
 	protected boolean validateCommand(char c)
 	{
 		for (MowerCMD f : MowerCMD.values())
 		{
-			if(f.name().equals(c))
+			if(f.name().equals(String.valueOf(c)))
 			{				
 				return true;
 			}		
@@ -55,6 +65,15 @@ public abstract class Mower {
 		this.lawn=lawn;
 	}
 	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public void setCommandStr(String command) throws FatalException
 	{
 		this.command=new LinkedList<String>();
@@ -62,7 +81,7 @@ public abstract class Mower {
 		for(int i=0;i<command.length();i++)
 		{
 			char c=command.charAt(i);
-			if(true||this.validateCommand(c))
+			if(this.validateCommand(c))
 			{
 				this.command.add(String.valueOf(c));
 			}
@@ -73,6 +92,17 @@ public abstract class Mower {
 
 		}
 		
+	}
+	
+	public String getCurrentCommand(boolean shouldRemoveFromQueue)
+	{
+		return shouldRemoveFromQueue?this.command.poll():this.command.peek();
+		
+	}
+	
+	public LinkedList<String> getFootPrint()
+	{
+		return this.footPrint;
 	}
 	
 	abstract public boolean executeCommand();

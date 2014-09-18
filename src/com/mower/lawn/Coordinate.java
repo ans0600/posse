@@ -37,10 +37,12 @@ public class Coordinate {
 		this.facing = facing;
 	}
 
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + facing;
 		result = prime * result + x;
 		result = prime * result + y;
 		return result;
@@ -56,12 +58,18 @@ public class Coordinate {
 		if (getClass() != obj.getClass())
 			return false;
 		Coordinate other = (Coordinate) obj;
+		if (facing != other.facing)
+			return false;
 		if (x != other.x)
 			return false;
 		if (y != other.y)
 			return false;
 		return true;
 	}
+
+
+
+	
 	
 	
 	

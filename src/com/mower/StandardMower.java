@@ -13,18 +13,16 @@ public class StandardMower extends Mower {
 
 	public StandardMower(MowerCoordinate initPosition)
 	{
-		this.initPosition=initPosition;
+		super(initPosition);
 		this.footPrint=new LinkedList<String>();		
 	}
 	
 	public StandardMower(Lawn lawn,MowerCoordinate initPosition)
 	{
+		super(initPosition);
 		this.lawn=lawn;
-		this.initPosition=initPosition;
-		this.footPrint=new LinkedList<String>();
-		
+		this.footPrint=new LinkedList<String>();		
 	}
-	
 	
 	 public boolean executeCommand()
 	 {
@@ -33,7 +31,7 @@ public class StandardMower extends Mower {
 			 String cmd=this.command.poll();
 			 if(cmd!=null)
 			 {
-				 this.destPosition=this.initPosition.getCopy().action(cmd.charAt(0));
+				 this.destPosition.action(cmd.charAt(0));
 				 this.destPosition.setType(CoordinateType.END);
 				 return true;
 			 }
@@ -78,10 +76,7 @@ public class StandardMower extends Mower {
 		this.mowLawn();
 	}
 	
-	public LinkedList<String> getFootPrint()
-	{
-		return this.footPrint;
-	}
+	
 	
 	
 	
