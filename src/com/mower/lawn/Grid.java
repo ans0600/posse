@@ -8,8 +8,6 @@ public class Grid {
 	
 	public Grid(Coordinate boundry)
 	{
-		//this.boundryX=boundryX;
-		//this.boundryY=boundryY;
 		this.boundry=boundry;
 		//TODO double check
 		this.visited=new boolean[this.boundry.getX()+1][this.boundry.getY()+1];
@@ -21,6 +19,15 @@ public class Grid {
 	{
 		return coordinate.getX()<=this.boundry.getX()&&coordinate.getY()<=this.boundry.getY()
 				&&coordinate.getX()>=0&&coordinate.getY()>=0;	
+	}
+	
+	public int getBlockCount()
+	{
+		if(this.boundry!=null)
+		{
+			return (this.boundry.getX()+1)*(this.boundry.getY()+1);
+		}
+		return 0;
 	}
 	
 	

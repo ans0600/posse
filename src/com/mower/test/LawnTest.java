@@ -2,7 +2,10 @@ package com.mower.test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,6 +19,7 @@ import com.mower.exception.CollisionException.CollisionType;
 import com.mower.lawn.Coordinate;
 import com.mower.lawn.Lawn;
 import com.mower.lawn.MowerCoordinate;
+import com.mower.task.MowerTask;
 
 public class LawnTest {
 
@@ -31,10 +35,12 @@ public class LawnTest {
 	public Mower mower5;
 	public Mower mower6;
 	public Lawn lawn;
+	public Lawn lawn2;
 	
 	@Before
 	public void setUp() throws Exception {
 		lawn=new Lawn(new Coordinate(5, 5));
+		lawn2=new Lawn(new Coordinate(1, 8));
 		m1=new MowerCoordinate(0, 0, 0);
 		m1a=new MowerCoordinate(0, 0, 90);
 		m2=new MowerCoordinate(5, 5, 0);
@@ -184,6 +190,79 @@ public class LawnTest {
 			}
 				
 		}
-
 	}
+	
+	@Test
+	public void getMowerTaskUneven() {
+		assertTrue(this.lawn2.calculateMowersTask(7));
+		
+		int mowersDoingMoreTask=0;
+		int mowersDoingLessTask=0;
+		
+		ArrayList<MowerTask> tasks=this.lawn2.getMowerTasks();
+	
+		assertTrue(tasks.size()==7);
+		
+		for(MowerTask m:tasks)
+		{
+			if(m.getBlocksCount()==2)
+			{
+				mowersDoingMoreTask++;
+			}
+			else if(m.getBlocksCount()==1)
+			{
+				mowersDoingLessTask++;
+			}
+			else
+			{
+				fail("Invalid mower task: "+m.getBlocksCount());
+			}
+		}
+		
+		assertTrue((mowersDoingLessTask+mowersDoingMoreTask)==7);
+		assertTrue(((mowersDoingMoreTask)*3+(mowersDoingLessTask)*2)==lawn2.getBlockCount());
+	}
+	
+	
+	@Test
+	public void getMowerTaskEven() {
+		assertTrue(this.lawn2.calculateMowersTask(9));
+		
+
+		ArrayList<MowerTask> tasks=this.lawn2.getMowerTasks();
+	
+		assertTrue(tasks.size()==9);
+		
+		for(MowerTask m:tasks)
+		{
+			if(m.getBlocksCount()!=2)
+			{
+				fail("Invalid mower task: "+m.getBlocksCount());
+			}
+
+		}
+		
+	}
+	
+	@Test
+	public void getMowerTaskInsufficient() {
+		assertTrue(this.lawn2.calculateMowersTask(100));
+		
+
+		ArrayList<MowerTask> tasks=this.lawn2.getMowerTasks();
+	
+		
+		assertTrue(tasks.size()==this.lawn2.getBlockCount());
+		
+		for(MowerTask m:tasks)
+		{
+			if(m.getBlocksCount()!=1)
+			{
+				fail("Invalid mower task: "+m.getBlocksCount());
+			}
+
+		}
+		
+	}
+	
 }
