@@ -59,210 +59,221 @@ public class LawnTest {
 	public void tearDown() throws Exception {
 	}
 
+//	@Test
+//	public void testIsInside() {
+//		assertTrue(this.lawn.isInside(m1));
+//		assertTrue(this.lawn.isInside(m2));
+//		assertFalse(this.lawn.isInside(m3));
+//		assertFalse(this.lawn.isInside(m4));
+//	}
+//	
+//	@Test
+//	public void testSet() {
+//		HashMap<Coordinate, Coordinate> coordinateSet=new HashMap<Coordinate, Coordinate>();
+//		coordinateSet.put(m1, m1);
+//		System.err.println(coordinateSet.containsKey(m2));
+//	}
+//	
+//	@Test
+//	public void testCollisionTypeBump() {
+//		try {
+//			mower3.setCommandStr("M");
+//			mower4.setCommandStr("M");
+//		} catch (FatalException e) {
+//			e.printStackTrace();
+//			fail("Unable to set the command");
+//		}
+//		lawn.addMower(mower3);
+//		lawn.addMower(mower4);
+//		lawn.startMowers();
+//				
+//		assertTrue(lawn.getCollisions().size()==2);		
+//		for(int i=0;i<lawn.getCollisions().size();i++)
+//		{
+//			CollisionException ex=lawn.getCollisions().get(i);
+//			if(ex.getMower()==mower3)
+//			{
+//				assertTrue(ex.getCoordinate().equals(mower4.getCurrentLocation()));
+//			}else if(ex.getMower()==mower4)
+//			{				
+//				assertTrue(ex.getCoordinate().equals(mower3.getCurrentLocation()));
+//			}else
+//			{
+//				fail("Unknown Mower in collision list");
+//			}
+//				
+//		}
+//	}
+//
+//	
+//	@Test
+//	public void testCollisionTypeRunOver() {
+//
+//		try {
+//			mower1.setCommandStr("M");
+//			mower2.setCommandStr("M");
+//		} catch (FatalException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			fail("Unable to set the command");
+//		}
+//		lawn.addMower(mower1);
+//		lawn.addMower(mower2);
+//		lawn.startMowers();
+//				
+//		assertTrue(lawn.getCollisions().size()==2);		
+//		for(int i=0;i<lawn.getCollisions().size();i++)
+//		{
+//			CollisionException ex=lawn.getCollisions().get(i);
+//			if(ex.getMower()==mower1)
+//			{
+//				assertTrue(ex.getCoordinate().equals(mower2.getCurrentLocation()));
+//			}else if(ex.getMower()==mower2)
+//			{				
+//				assertTrue(ex.getCoordinate().equals(mower1.getCurrentLocation()));
+//			}else
+//			{
+//				fail("Unknown Mower in collision list");
+//			}
+//				
+//		}
+//		
+//	}
+//	
+//	@Test
+//	public void testNoCollision() {
+//
+//		try {
+//			mower5.setCommandStr("M");
+//			mower6.setCommandStr("M");
+//		} catch (FatalException e) {
+//			e.printStackTrace();
+//			fail("Unable to set the command");
+//		}
+//		lawn.addMower(mower5);
+//		lawn.addMower(mower6);
+//		lawn.startMowers();
+//				
+//		assertTrue(lawn.getCollisions().size()==0);		
+//
+//	}
+//	
+//	@Test
+//	public void testCollisionChasing() {
+//
+//		try {
+//			mower5.setCommandStr("MM");
+//			mower6.setCommandStr("M");
+//		} catch (FatalException e) {
+//			e.printStackTrace();
+//			fail("Unable to set the command");
+//		}
+//		lawn.addMower(mower5);
+//		lawn.addMower(mower6);
+//		lawn.startMowers();
+//				
+//		assertTrue(lawn.getCollisions().size()==2);	
+//		
+//		for(int i=0;i<lawn.getCollisions().size();i++)
+//		{
+//			CollisionException ex=lawn.getCollisions().get(i);
+//			//System.err.println(ex.toString());
+//			if(ex.getMower()==mower5)
+//			{
+//				assertTrue(ex.getCoordinate().equals(mower6.getCurrentLocation()));
+//			}else if(ex.getMower()==mower6)
+//			{				
+//				assertTrue(ex.getCoordinate().equals(mower5.getCurrentLocation()));
+//			}else
+//			{
+//				fail("Unknown Mower in collision list");
+//			}
+//				
+//		}
+//	}
+//	
+//	@Test
+//	public void getMowerTaskUneven() {
+//		assertTrue(this.lawn2.calculateMowersTask(7));
+//		
+//		int mowersDoingMoreTask=0;
+//		int mowersDoingLessTask=0;
+//		
+//		ArrayList<MowerTask> tasks=this.lawn2.getMowerTasks();
+//	
+//		assertTrue(tasks.size()==7);
+//		
+//		for(MowerTask m:tasks)
+//		{
+//			if(m.getBlocksCount()==2)
+//			{
+//				mowersDoingMoreTask++;
+//			}
+//			else if(m.getBlocksCount()==1)
+//			{
+//				mowersDoingLessTask++;
+//			}
+//			else
+//			{
+//				fail("Invalid mower task: "+m.getBlocksCount());
+//			}
+//		}
+//		
+//		assertTrue((mowersDoingLessTask+mowersDoingMoreTask)==7);
+//		assertTrue(((mowersDoingMoreTask)*3+(mowersDoingLessTask)*2)==lawn2.getBlockCount());
+//	}
+//	
+//	
+//	@Test
+//	public void getMowerTaskEven() {
+//		assertTrue(this.lawn2.calculateMowersTask(9));
+//		
+//
+//		ArrayList<MowerTask> tasks=this.lawn2.getMowerTasks();
+//	
+//		assertTrue(tasks.size()==9);
+//		
+//		for(MowerTask m:tasks)
+//		{
+//			if(m.getBlocksCount()!=2)
+//			{
+//				fail("Invalid mower task: "+m.getBlocksCount());
+//			}
+//
+//		}
+//		
+//	}
+//	
+//	@Test
+//	public void getMowerTaskInsufficient() {
+//		assertTrue(this.lawn2.calculateMowersTask(100));
+//		
+//
+//		ArrayList<MowerTask> tasks=this.lawn2.getMowerTasks();
+//	
+//		
+//		assertTrue(tasks.size()==this.lawn2.getBlockCount());
+//		
+//		for(MowerTask m:tasks)
+//		{
+//			if(m.getBlocksCount()!=1)
+//			{
+//				fail("Invalid mower task: "+m.getBlocksCount());
+//			}
+//
+//		}
+//		
+//	}
+	
+//	@Test
+//	public void autoAssignTaskForLawn1() {
+//		
+//		lawn.autoTaskMowers(2);
+//	}
+//	
 	@Test
-	public void testIsInside() {
-		assertTrue(this.lawn.isInside(m1));
-		assertTrue(this.lawn.isInside(m2));
-		assertFalse(this.lawn.isInside(m3));
-		assertFalse(this.lawn.isInside(m4));
+	public void autoAssignTaskForLawn2() {
+		
+		lawn.autoTaskMowers(12);
 	}
-	
-	@Test
-	public void testSet() {
-		HashMap<Coordinate, Coordinate> coordinateSet=new HashMap<Coordinate, Coordinate>();
-		coordinateSet.put(m1, m1);
-		System.err.println(coordinateSet.containsKey(m2));
-	}
-	
-	@Test
-	public void testCollisionTypeBump() {
-		try {
-			mower3.setCommandStr("M");
-			mower4.setCommandStr("M");
-		} catch (FatalException e) {
-			e.printStackTrace();
-			fail("Unable to set the command");
-		}
-		lawn.addMower(mower3);
-		lawn.addMower(mower4);
-		lawn.startMowers();
-				
-		assertTrue(lawn.getCollisions().size()==2);		
-		for(int i=0;i<lawn.getCollisions().size();i++)
-		{
-			CollisionException ex=lawn.getCollisions().get(i);
-			if(ex.getMower()==mower3)
-			{
-				assertTrue(ex.getCoordinate().equals(mower4.getCurrentLocation()));
-			}else if(ex.getMower()==mower4)
-			{				
-				assertTrue(ex.getCoordinate().equals(mower3.getCurrentLocation()));
-			}else
-			{
-				fail("Unknown Mower in collision list");
-			}
-				
-		}
-	}
-
-	
-	@Test
-	public void testCollisionTypeRunOver() {
-
-		try {
-			mower1.setCommandStr("M");
-			mower2.setCommandStr("M");
-		} catch (FatalException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			fail("Unable to set the command");
-		}
-		lawn.addMower(mower1);
-		lawn.addMower(mower2);
-		lawn.startMowers();
-				
-		assertTrue(lawn.getCollisions().size()==2);		
-		for(int i=0;i<lawn.getCollisions().size();i++)
-		{
-			CollisionException ex=lawn.getCollisions().get(i);
-			if(ex.getMower()==mower1)
-			{
-				assertTrue(ex.getCoordinate().equals(mower2.getCurrentLocation()));
-			}else if(ex.getMower()==mower2)
-			{				
-				assertTrue(ex.getCoordinate().equals(mower1.getCurrentLocation()));
-			}else
-			{
-				fail("Unknown Mower in collision list");
-			}
-				
-		}
-		
-	}
-	
-	@Test
-	public void testNoCollision() {
-
-		try {
-			mower5.setCommandStr("M");
-			mower6.setCommandStr("M");
-		} catch (FatalException e) {
-			e.printStackTrace();
-			fail("Unable to set the command");
-		}
-		lawn.addMower(mower5);
-		lawn.addMower(mower6);
-		lawn.startMowers();
-				
-		assertTrue(lawn.getCollisions().size()==0);		
-
-	}
-	
-	@Test
-	public void testCollisionChasing() {
-
-		try {
-			mower5.setCommandStr("MM");
-			mower6.setCommandStr("M");
-		} catch (FatalException e) {
-			e.printStackTrace();
-			fail("Unable to set the command");
-		}
-		lawn.addMower(mower5);
-		lawn.addMower(mower6);
-		lawn.startMowers();
-				
-		assertTrue(lawn.getCollisions().size()==2);	
-		
-		for(int i=0;i<lawn.getCollisions().size();i++)
-		{
-			CollisionException ex=lawn.getCollisions().get(i);
-			//System.err.println(ex.toString());
-			if(ex.getMower()==mower5)
-			{
-				assertTrue(ex.getCoordinate().equals(mower6.getCurrentLocation()));
-			}else if(ex.getMower()==mower6)
-			{				
-				assertTrue(ex.getCoordinate().equals(mower5.getCurrentLocation()));
-			}else
-			{
-				fail("Unknown Mower in collision list");
-			}
-				
-		}
-	}
-	
-	@Test
-	public void getMowerTaskUneven() {
-		assertTrue(this.lawn2.calculateMowersTask(7));
-		
-		int mowersDoingMoreTask=0;
-		int mowersDoingLessTask=0;
-		
-		ArrayList<MowerTask> tasks=this.lawn2.getMowerTasks();
-	
-		assertTrue(tasks.size()==7);
-		
-		for(MowerTask m:tasks)
-		{
-			if(m.getBlocksCount()==2)
-			{
-				mowersDoingMoreTask++;
-			}
-			else if(m.getBlocksCount()==1)
-			{
-				mowersDoingLessTask++;
-			}
-			else
-			{
-				fail("Invalid mower task: "+m.getBlocksCount());
-			}
-		}
-		
-		assertTrue((mowersDoingLessTask+mowersDoingMoreTask)==7);
-		assertTrue(((mowersDoingMoreTask)*3+(mowersDoingLessTask)*2)==lawn2.getBlockCount());
-	}
-	
-	
-	@Test
-	public void getMowerTaskEven() {
-		assertTrue(this.lawn2.calculateMowersTask(9));
-		
-
-		ArrayList<MowerTask> tasks=this.lawn2.getMowerTasks();
-	
-		assertTrue(tasks.size()==9);
-		
-		for(MowerTask m:tasks)
-		{
-			if(m.getBlocksCount()!=2)
-			{
-				fail("Invalid mower task: "+m.getBlocksCount());
-			}
-
-		}
-		
-	}
-	
-	@Test
-	public void getMowerTaskInsufficient() {
-		assertTrue(this.lawn2.calculateMowersTask(100));
-		
-
-		ArrayList<MowerTask> tasks=this.lawn2.getMowerTasks();
-	
-		
-		assertTrue(tasks.size()==this.lawn2.getBlockCount());
-		
-		for(MowerTask m:tasks)
-		{
-			if(m.getBlocksCount()!=1)
-			{
-				fail("Invalid mower task: "+m.getBlocksCount());
-			}
-
-		}
-		
-	}
-	
 }

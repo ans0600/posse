@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import com.mower.exception.FatalException;
+import com.mower.footprint.FootPrint;
 import com.mower.lawn.Lawn;
 import com.mower.lawn.MowerCoordinate;
 import com.mower.lawn.MowerCoordinate.CoordinateType;
@@ -26,7 +27,7 @@ public abstract class Mower {
 	protected MowerCoordinate initPosition;
 	protected MowerCoordinate destPosition;
 	
-	protected LinkedList<String> footPrint;
+	protected FootPrint<String> footPrint;
 	
 	protected Queue<String> command;
 	
@@ -100,7 +101,13 @@ public abstract class Mower {
 		
 	}
 	
-	public LinkedList<String> getFootPrint()
+	public boolean insertCommand(String c)
+	{
+		if(this.command==null)this.command=new LinkedList<String>();
+		return this.command.add(c);
+	}
+	
+	public FootPrint<String> getFootPrint()
 	{
 		return this.footPrint;
 	}

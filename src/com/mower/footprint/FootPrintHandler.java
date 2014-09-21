@@ -2,5 +2,5 @@ package com.mower.footprint;
 
 public interface FootPrintHandler {
 
-	public void handleFootPrint();
+	public void handleFootPrintAdd(Object[] args);
 }
