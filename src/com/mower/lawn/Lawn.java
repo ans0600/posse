@@ -2,15 +2,18 @@ package com.mower.lawn;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import com.mower.Mower;
 import com.mower.StandardMower;
 import com.mower.exception.CollisionException;
 import com.mower.exception.CollisionException.CollisionType;
+import com.mower.footprint.FootPrint;
+import com.mower.footprint.FootPrint2;
 import com.mower.footprint.FootPrintHandler;
 import com.mower.task.MowerTask;
 
-public class Lawn extends Grid implements FootPrintHandler {
+public class Lawn extends Grid  {
 
 	private ArrayList<Mower> mowers;
 	private HashMap<Coordinate, Coordinate> coordinateSet;
@@ -43,6 +46,11 @@ public class Lawn extends Grid implements FootPrintHandler {
 	public ArrayList<MowerTask> getMowerTasks()
 	{
 		return this.mowerTasks;
+	}
+	
+	public ArrayList<Mower> getMowers()
+	{
+		return this.mowers;
 	}
 
 	/**
@@ -140,7 +148,11 @@ public class Lawn extends Grid implements FootPrintHandler {
 					this.mowerTasks.add(t);
 				}
 				
-			} else if(totalBlocks % numOfMowers==0)
+			}else if(totalBlocks == numOfMowers)
+			{
+			}
+			
+			else if(totalBlocks % numOfMowers==0)
 			{
 				for(int i=0;i<numOfMowers;i++)
 				{
@@ -157,11 +169,15 @@ public class Lawn extends Grid implements FootPrintHandler {
 				int mowersDoingLessTask = numOfMowers - mowersDoingMoreTask;
 				int lessTaskCount =  (int) Math.floor(d);
 			    
-				for(int i=0;i<mowersDoingLessTask;i++)
+				if(lessTaskCount>1)
 				{
-					MowerTask t=new MowerTask(lessTaskCount-1);
-					this.mowerTasks.add(t);
+					for(int i=0;i<mowersDoingLessTask;i++)
+					{
+						MowerTask t=new MowerTask(lessTaskCount-1);
+						this.mowerTasks.add(t);
+					}
 				}
+				
 				
 				for(int i=0;i<mowersDoingMoreTask;i++)
 				{
@@ -184,58 +200,144 @@ public class Lawn extends Grid implements FootPrintHandler {
 		this.calculateMowersTask(numOfMowers);
 		this.probeMower=new StandardMower(this,new MowerCoordinate(0,0,0));
 		this.probeMower.mowLawn();
-		System.err.println(this.mowers.size());
-	}
-
-	@Override
-	public void handleFootPrintAdd(Object[] args) {
-		System.err.println("Cmd is: "+args[0]);
-		if(this.mowerTasks.size()>0&&args.length>0)
+		
+		LinkedList<FootPrint2> footPrint=this.probeMower.getFootPrint();
+		String prevCmd=null;
+		for(FootPrint2 fp:footPrint)
 		{
-			String cmd=(String)args[0];
-			
-			if(this.currentMower==null)
+			System.err.println(fp.toString());
+			//System.err.println("Mower Task:"+this.mowerTasks.size()+" "+this.mowerTasks.get(0).getBlocksCount());
+			if(this.mowerTasks.size()>0)
 			{
-				
-				//the next mower need to start at the next block
-//				if(this.mowers.size()>0)
-//				{
-//					Mower lastMower=this.mowers.get(this.mowers.size()-1);
-//					if(lastMower.getCurrentLocation().getX()==this.probeMower.getCurrentLocation().getX()&&
-//							lastMower.getCurrentLocation().getY()==this.probeMower.getCurrentLocation().getY()&&
-//							lastMower.getCurrentLocation().getFacing()==this.probeMower.getCurrentLocation().getFacing())
-//						{
-//							System.err.println("SSSSSS");
-//							return;
-//						}
-//				}
+				if(this.currentMower==null)
+				{
+					if(this.mowers.size()>0)
+					{
+						if(this.jumpNext)
+						{
+						    if(fp.getCommand().equals("M"))this.jumpNext=false;
+						    System.err.println("Jump!!");
+							continue;
+						}
+					}
+					this.currentMower=new StandardMower(fp.getMowerCoordinate().getCopy());
+					System.err.println("New Mower Crated:"+fp.getMowerCoordinate().getCopy());
+				}
+				this.currentMower.insertCommand(fp.getCommand());
+				System.err.println("Insert:"+fp.getCommand());
+				if(fp.getCommand().equals("M")&&!this.mowerTasks.get(0).assignBlock())
+				{
+					this.mowerTasks.remove(0);
+					
+					this.mowers.add(this.currentMower);
+					this.currentMower=null;
+					this.jumpNext=true;
+				}
+			}else
+			{
+				//assign special stand still tasks
+				 
 				if(this.mowers.size()>0)
 				{
 					if(this.jumpNext)
 					{
-					    if(cmd.equals("M"))this.jumpNext=false;
-					    System.err.println("Jump!!");
-						return;
+					    if(fp.getCommand().equals("M"))this.jumpNext=false;
+					    prevCmd=fp.getCommand();
+					    System.err.println("Jump22222");
+						continue;
 					}
 				}
-				this.currentMower=new StandardMower(this.probeMower.getCurrentLocation().getCopy());
-				System.err.println("New Mower Crated:"+this.probeMower.getCurrentLocation());
-					
 				
+				if(prevCmd==null||prevCmd.equals("M"))
+				{
+					Mower m=new StandardMower(fp.getMowerCoordinate().getCopy());
+					this.mowers.add(m);
+					System.err.println("New Mower Crated222:"+fp.getMowerCoordinate().getCopy());
+				}
+				prevCmd=fp.getCommand();
 			}
-			this.currentMower.insertCommand(cmd);
-			System.err.println("Insert:"+cmd);
-			if(cmd.equals("M")&&!this.mowerTasks.get(0).assignBlock())
-			{
-				this.mowerTasks.remove(0);
-				this.mowers.add(this.currentMower);
-				this.currentMower=null;
-				this.jumpNext=true;
-			}
+			
 			
 		}
 		
-		//System.err.println("Called");
+
+		
+		
+		System.err.println(this.mowers.size());
 	}
+
+//	@Override
+//	public void handleFootPrintAdd(Object[] args,Mower next) {
+//		System.err.println("Cmd is: "+args[0]+" "+next.getCurrentLocation());
+//		if(this.mowerTasks.size()>0&&args.length>0)
+//		{
+//			String cmd=(String)args[0];
+//			
+//			if(this.currentMower==null)
+//			{
+//				
+//				//the next mower need to start at the next block
+////				if(this.mowers.size()>0)
+////				{
+////					Mower lastMower=this.mowers.get(this.mowers.size()-1);
+////					if(lastMower.getCurrentLocation().getX()==this.probeMower.getCurrentLocation().getX()&&
+////							lastMower.getCurrentLocation().getY()==this.probeMower.getCurrentLocation().getY()&&
+////							lastMower.getCurrentLocation().getFacing()==this.probeMower.getCurrentLocation().getFacing())
+////						{
+////							System.err.println("SSSSSS");
+////							return;
+////						}
+////				}
+//				if(this.mowers.size()>0)
+//				{
+//					if(this.jumpNext)
+//					{
+//					    if(cmd.equals("M"))this.jumpNext=false;
+//					    System.err.println("Jump!!");
+//						return;
+//					}
+//				}
+//				this.currentMower=new StandardMower(this.probeMower.getCurrentLocation().getCopy());
+//				System.err.println("New Mower Crated:"+this.probeMower.getCurrentLocation());
+//					
+//				
+//			}
+//			this.currentMower.insertCommand(cmd);
+//			System.err.println("Insert:"+cmd);
+//
+//			 if(cmd.equals("M")&&!this.mowerTasks.get(0).assignBlock())
+//			{
+//				this.mowerTasks.remove(0);
+//				this.mowers.add(this.currentMower);
+//				this.currentMower=null;
+//				this.jumpNext=true;
+//			}
+//			
+//		}
+//		else if(args.length>0)
+//		{
+//			//assign special stand still tasks
+//			String cmd=(String)args[0];
+//			
+//			if(this.mowers.size()>0)
+//			{
+//				if(this.jumpNext)
+//				{
+//				    if(cmd.equals("M"))this.jumpNext=false;
+//				    System.err.println("Jump22222");
+//					return;
+//				}
+//			}
+//			
+//			if(cmd.equals("M"))
+//			{
+//				Mower m=new StandardMower(this.probeMower.getCurrentLocation().getCopy());
+//				this.mowers.add(m);
+//				System.err.println("New Mower Crated:"+this.probeMower.getCurrentLocation());
+//			}
+//			
+//		}
+		
+//	}
 
 }

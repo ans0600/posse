@@ -265,15 +265,125 @@ public class LawnTest {
 //		
 //	}
 	
-//	@Test
-//	public void autoAssignTaskForLawn1() {
-//		
-//		lawn.autoTaskMowers(2);
-//	}
-//	
 	@Test
-	public void autoAssignTaskForLawn2() {
+	public void autoAssignTaskForLawnEvenCase1() {
 		
-		lawn.autoTaskMowers(12);
+		lawn.autoTaskMowers(2);
+		ArrayList<Mower> mowers=lawn.getMowers();
+		assertTrue(mowers.size()==2);
+		int cmdCount=-1;
+		for(Mower m:mowers)
+		{
+			int totalMoveCommands=0;
+			String cmd;
+			while((cmd=m.getCurrentCommand(true))!=null)
+			{
+				if(cmd=="M")totalMoveCommands++;
+				
+			}
+			
+			if(cmdCount==-1)
+			{
+				cmdCount=totalMoveCommands;
+			}else
+			{
+				assertTrue(cmdCount==totalMoveCommands);
+			}
+			
+			
+		}
 	}
+	
+//	@Test
+//	public void autoAssignTaskForLawnEvenCase2() {
+//		
+//		lawn.autoTaskMowers(12);
+//		
+//		ArrayList<Mower> mowers=lawn.getMowers();
+//		assertTrue(mowers.size()==12);
+//		
+//		int cmdCount=-1;
+//		for(Mower m:mowers)
+//		{
+//			int totalMoveCommands=0;
+//			String cmd;
+//			while((cmd=m.getCurrentCommand(true))!=null)
+//			{
+//				if(cmd=="M")totalMoveCommands++;
+//				
+//			}
+//			
+//			if(cmdCount==-1)
+//			{
+//				cmdCount=totalMoveCommands;
+//			}else
+//			{
+//				assertTrue(cmdCount==totalMoveCommands);
+//			}
+//			
+//			
+//		}
+//	}
+	
+//	@Test
+//	public void autoAssignTaskForLawnUnEvenCase1() {
+//		
+//		lawn2.autoTaskMowers(12);
+//		
+//		ArrayList<Mower> mowers=lawn.getMowers();
+//		assertTrue(mowers.size()==12);
+//		
+//		int cmdCount=-1;
+//		for(Mower m:mowers)
+//		{
+//			int totalMoveCommands=0;
+//			String cmd;
+//			while((cmd=m.getCurrentCommand(true))!=null)
+//			{
+//				if(cmd=="M")totalMoveCommands++;
+//				
+//			}
+//			
+//			if(cmdCount==-1)
+//			{
+//				cmdCount=totalMoveCommands;
+//			}else
+//			{
+//				assertTrue(cmdCount==totalMoveCommands);
+//			}
+//			
+//			
+//		}
+//	}
+	
+//	@Test
+//	public void autoAssignTaskForLawnUnEvenCase1() {
+//		
+//		lawn2.autoTaskMowers(5);
+//		
+//		ArrayList<Mower> mowers=lawn.getMowers();
+//		assertTrue(mowers.size()==18);
+//		
+//		int cmdCount=-1;
+//		for(Mower m:mowers)
+//		{
+//			int totalMoveCommands=0;
+//			String cmd;
+//			while((cmd=m.getCurrentCommand(true))!=null)
+//			{
+//				if(cmd=="M")totalMoveCommands++;
+//				
+//			}
+//			
+//			if(cmdCount==-1)
+//			{
+//				cmdCount=totalMoveCommands;
+//			}else
+//			{
+//				assertTrue(cmdCount==totalMoveCommands);
+//			}
+//			
+//			
+//		}
+//	}
 }

@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.mower.footprint.FootPrint;
+import com.mower.footprint.FootPrint2;
 import com.mower.footprint.FootPrintImpl;
 import com.mower.footprint.FootPrintInvocationHandler;
 import com.mower.lawn.Lawn;
@@ -18,19 +19,22 @@ public class StandardMower extends Mower {
 	public StandardMower(MowerCoordinate initPosition)
 	{
 		super(initPosition);
+		this.footPrint=new LinkedList<FootPrint2>();
 		//this.footPrint=new FootPrint<String>();
 
-		this.footPrint=(FootPrint<String>) Proxy.newProxyInstance(FootPrint.class.getClassLoader(), 
-				new Class<?>[]{FootPrint.class}, new FootPrintInvocationHandler(new FootPrintImpl<String>(),null));
+//		this.footPrint=(FootPrint<String>) Proxy.newProxyInstance(FootPrint.class.getClassLoader(), 
+//				new Class<?>[]{FootPrint.class}, new FootPrintInvocationHandler(new FootPrintImpl<String>(),null));
 	}
 	
 	public StandardMower(Lawn lawn,MowerCoordinate initPosition)
 	{
 		super(initPosition);
 		this.lawn=lawn;
-		this.footPrint=new FootPrintImpl<String>();	
-		this.footPrint=(FootPrint<String>) Proxy.newProxyInstance(FootPrint.class.getClassLoader(), 
-				new Class<?>[]{FootPrint.class}, new FootPrintInvocationHandler(new FootPrintImpl<String>(),lawn));
+		this.footPrint=new LinkedList<FootPrint2>();
+//		/this.footPrint.add(new FootPrint2(initPosition.getCopy(), ""));
+	//	this.footPrint=new FootPrintImpl<String>();	
+//		this.footPrint=(FootPrint<String>) Proxy.newProxyInstance(FootPrint.class.getClassLoader(), 
+//				new Class<?>[]{FootPrint.class}, new FootPrintInvocationHandler(new FootPrintImpl<String>(),lawn));
 
 	}
 	
@@ -67,19 +71,21 @@ public class StandardMower extends Mower {
 		{
 			//no more moves
 			//this.footPrint.removeLast();
-			while(this.footPrint.getLast()=="R")
-			{
-				this.footPrint.removeLast();
-			}
+//			while(this.footPrint.getLast().getCommand()=="R")
+//			{
+//				this.footPrint.removeLast();
+//			}
 			return;
 		}else if(pos==null)
 		{
-			this.footPrint.add("R");
+			FootPrint2 fp=new FootPrint2(this.destPosition.getCopy(), "R");
+			this.footPrint.add(fp);
 			this.destPosition.rotateRight();
 		}else
 		{
 			pos.setType(CoordinateType.END);
-			this.footPrint.add("M");
+			FootPrint2 fp=new FootPrint2(this.destPosition.getCopy(), "M");
+			this.footPrint.add(fp);
 			this.destPosition=pos;
 			this.destPosition.resetRotationCount();
 		}

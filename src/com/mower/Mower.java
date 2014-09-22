@@ -5,6 +5,7 @@ import java.util.Queue;
 
 import com.mower.exception.FatalException;
 import com.mower.footprint.FootPrint;
+import com.mower.footprint.FootPrint2;
 import com.mower.lawn.Lawn;
 import com.mower.lawn.MowerCoordinate;
 import com.mower.lawn.MowerCoordinate.CoordinateType;
@@ -27,7 +28,7 @@ public abstract class Mower {
 	protected MowerCoordinate initPosition;
 	protected MowerCoordinate destPosition;
 	
-	protected FootPrint<String> footPrint;
+	protected LinkedList<FootPrint2> footPrint;
 	
 	protected Queue<String> command;
 	
@@ -59,6 +60,10 @@ public abstract class Mower {
 	
 	public MowerCoordinate getCurrentLocation() {
 		return this.destPosition;
+	}
+	
+	public void setCurrentLocation(MowerCoordinate destPosition) {
+		this.destPosition=destPosition;
 	}
 	
 	public void setLawn(Lawn lawn)
@@ -107,7 +112,7 @@ public abstract class Mower {
 		return this.command.add(c);
 	}
 	
-	public FootPrint<String> getFootPrint()
+	public LinkedList<FootPrint2> getFootPrint()
 	{
 		return this.footPrint;
 	}
