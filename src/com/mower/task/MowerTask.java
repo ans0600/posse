@@ -21,7 +21,7 @@ public class MowerTask {
 	{
 		this.inProgress=true;
 		this.blocksCount--;
-		return this.blocksCount>=1;
+		return this.blocksCount>0;
 	}
 	public boolean isInProgress()
 	{

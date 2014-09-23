@@ -148,8 +148,6 @@ public class Lawn extends Grid  {
 					this.mowerTasks.add(t);
 				}
 				
-			}else if(totalBlocks == numOfMowers)
-			{
 			}
 			
 			else if(totalBlocks % numOfMowers==0)
@@ -168,20 +166,18 @@ public class Lawn extends Grid  {
 				int moreTaskCount = (int) Math.ceil(d);
 				int mowersDoingLessTask = numOfMowers - mowersDoingMoreTask;
 				int lessTaskCount =  (int) Math.floor(d);
-			    
-				if(lessTaskCount>1)
+
+				for(int i=0;i<mowersDoingLessTask;i++)
 				{
-					for(int i=0;i<mowersDoingLessTask;i++)
-					{
-						MowerTask t=new MowerTask(lessTaskCount-1);
-						this.mowerTasks.add(t);
-					}
+					MowerTask t=new MowerTask(lessTaskCount);
+					this.mowerTasks.add(t);
 				}
+
 				
 				
 				for(int i=0;i<mowersDoingMoreTask;i++)
 				{
-					MowerTask t=new MowerTask(moreTaskCount-1);
+					MowerTask t=new MowerTask(moreTaskCount);
 					this.mowerTasks.add(t);
 				}
 
@@ -202,7 +198,6 @@ public class Lawn extends Grid  {
 		this.probeMower.mowLawn();
 		
 		LinkedList<FootPrint2> footPrint=this.probeMower.getFootPrint();
-		String prevCmd=null;
 		for(FootPrint2 fp:footPrint)
 		{
 			System.err.println(fp.toString());
@@ -211,56 +206,30 @@ public class Lawn extends Grid  {
 			{
 				if(this.currentMower==null)
 				{
-					if(this.mowers.size()>0)
-					{
-						if(this.jumpNext)
-						{
-						    if(fp.getCommand().equals("M"))this.jumpNext=false;
-						    System.err.println("Jump!!");
-							continue;
-						}
-					}
+					if(!fp.getCommand().equals("M"))continue;
 					this.currentMower=new StandardMower(fp.getMowerCoordinate().getCopy());
-					System.err.println("New Mower Crated:"+fp.getMowerCoordinate().getCopy());
+					System.err.println("New Mower Created:"+fp.getMowerCoordinate().getCopy());
 				}
-				this.currentMower.insertCommand(fp.getCommand());
-				System.err.println("Insert:"+fp.getCommand());
+				
 				if(fp.getCommand().equals("M")&&!this.mowerTasks.get(0).assignBlock())
 				{
 					this.mowerTasks.remove(0);
-					
 					this.mowers.add(this.currentMower);
 					this.currentMower=null;
 					this.jumpNext=true;
-				}
-			}else
-			{
-				//assign special stand still tasks
-				 
-				if(this.mowers.size()>0)
+					System.err.println("Curent Mower Finished!");
+				}else
 				{
-					if(this.jumpNext)
-					{
-					    if(fp.getCommand().equals("M"))this.jumpNext=false;
-					    prevCmd=fp.getCommand();
-					    System.err.println("Jump22222");
-						continue;
-					}
+					this.currentMower.insertCommand(fp.getCommand());
 				}
 				
-				if(prevCmd==null||prevCmd.equals("M"))
-				{
-					Mower m=new StandardMower(fp.getMowerCoordinate().getCopy());
-					this.mowers.add(m);
-					System.err.println("New Mower Crated222:"+fp.getMowerCoordinate().getCopy());
-				}
-				prevCmd=fp.getCommand();
 			}
-			
-			
+					
 		}
 		
-
+		if(this.currentMower!=null)this.mowers.add(this.currentMower);
+		
+		//TODO what if there is still task left
 		
 		
 		System.err.println(this.mowers.size());

@@ -62,6 +62,11 @@ public abstract class Mower {
 		return this.destPosition;
 	}
 	
+	public Queue<String> getCommand()
+	{
+		return this.command;
+	}
+	
 	public void setCurrentLocation(MowerCoordinate destPosition) {
 		this.destPosition=destPosition;
 	}

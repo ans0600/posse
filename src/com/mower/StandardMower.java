@@ -71,10 +71,10 @@ public class StandardMower extends Mower {
 		{
 			//no more moves
 			//this.footPrint.removeLast();
-//			while(this.footPrint.getLast().getCommand()=="R")
-//			{
-//				this.footPrint.removeLast();
-//			}
+			while(this.footPrint.getLast().getCommand()=="R")
+			{
+				this.footPrint.removeLast();
+			}
 			return;
 		}else if(pos==null)
 		{
