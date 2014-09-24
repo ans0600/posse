@@ -37,6 +37,23 @@ public class Coordinate {
 		this.facing = facing;
 	}
 
+	
+	public static int getFacingByName(String f)
+	{
+		switch(f)
+		{
+			case "N":
+				return 0;
+			case "E":
+				return 90;
+			case "S":
+				return 180;
+			case "W":
+				return 270;
+			default:
+					return 0;
+		}
+	}
 
 	@Override
 	public int hashCode() {

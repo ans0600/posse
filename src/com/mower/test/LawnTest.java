@@ -253,11 +253,11 @@ public class LawnTest {
 
 		ArrayList<MowerTask> tasks=this.lawn2.getMowerTasks();
 	
-		assertTrue(tasks.size()==9);
+		assertTrue(tasks.size()==18);
 		
 		for(MowerTask m:tasks)
 		{
-			if(m.getBlocksCount()!=2)
+			if(m.getBlocksCount()!=1)
 			{
 				fail("Invalid mower task: "+m.getBlocksCount());
 			}
@@ -369,7 +369,7 @@ public class LawnTest {
 				assertTrue(m.getCommand().toString().equals("[M, R, M]"));
 				
 			}else if(i==2)
-			{
+			{				
 				assertTrue(m.getInitPosition().toString().equals("2 0 W"));
 				assertTrue(m.getCommand().toString().equals("[M, R, M]"));
 				
@@ -383,30 +383,29 @@ public class LawnTest {
 		
 		lawn2.autoTaskMowers(12);
 		
-		ArrayList<Mower> mowers=lawn.getMowers();
+		ArrayList<Mower> mowers=lawn2.getMowers();
 		assertTrue(mowers.size()==12);
 		
-		int cmdCount=-1;
+		int blockCount=0;
 		for(Mower m:mowers)
 		{
 			int totalMoveCommands=0;
 			String cmd;
 			while((cmd=m.getCurrentCommand(true))!=null)
 			{
-				if(cmd=="M")totalMoveCommands++;
+				if(cmd=="M")totalMoveCommands+=2;
 				
-			}
-			
-			if(cmdCount==-1)
+			}	
+			if(totalMoveCommands==0)
 			{
-				cmdCount=totalMoveCommands;
+				blockCount++;
 			}else
 			{
-				assertTrue(cmdCount==totalMoveCommands);
+				blockCount+=totalMoveCommands;
 			}
 			
-			
 		}
+		assertTrue(blockCount==18);
 	}
 	
 	@Test
@@ -452,44 +451,18 @@ public class LawnTest {
 	}
 	
 	@Test
-	public void autoAssignTaskForSameCase1() {
+	public void autoAssignTaskForTooManyCase1() {
 		
 		lawn2.autoTaskMowers(100);
 		
 		ArrayList<Mower> mowers=lawn2.getMowers();
 		assertTrue(mowers.size()==18);
 		
-//		for(int i=0;i<mowers.size();i++)
-//		{
-//			Mower m=mowers.get(i);
-//			if(i==0)
-//			{
-//				assertTrue(m.getInitPosition().toString().equals("0 0 N"));
-//				assertTrue(m.getCommand().toString().equals("[M, M]"));
-//			}
-//			else if(i==1)
-//			{
-//				assertTrue(m.getInitPosition().toString().equals("0 3 N"));
-//				assertTrue(m.getCommand().toString().equals("[M, M]"));
-//				
-//			}else if(i==2)
-//			{
-//				assertTrue(m.getInitPosition().toString().equals("0 6 N"));
-//				assertTrue(m.getCommand().toString().equals("[M, M, R, M, R]"));
-//				
-//			}
-//			else if(i==3)
-//			{
-//				assertTrue(m.getInitPosition().toString().equals("1 7 S"));
-//				assertTrue(m.getCommand().toString().equals("[M, M, M]"));
-//				
-//			}
-//			else if(i==4)
-//			{
-//				assertTrue(m.getInitPosition().toString().equals("1 3 S"));
-//				assertTrue(m.getCommand().toString().equals("[M, M, M]"));
-//				
-//			}
-//		}
+		for(Mower m:mowers)
+		{
+			assertTrue(m.getCommand().size()==0);
+			
+		}
+		
 	}
 }

@@ -26,7 +26,7 @@ public class CollisionException extends FatalException {
 		this.mower=m;
 		this.coordinate=c;
 		this.collisionType=type;
-		
+		System.err.println("INit"+m.toString());
 	}
 
 //	public void setCoordinate(Coordinate coordinate) {
@@ -57,7 +57,7 @@ public class CollisionException extends FatalException {
 
 	@Override
 	public String toString() {
-		return "Mower ID:"+mower.getId()+" will "+collisionType.value+" @"+coordinate;
+		return "Mower ID:"+mower.getId()+" will "+collisionType.value+" at "+coordinate;
 	}
 
 
