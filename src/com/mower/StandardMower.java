@@ -31,6 +31,8 @@ public class StandardMower extends Mower {
 			 String cmd=this.command.poll();
 			 if(cmd!=null)
 			 {
+				 this.prevPosition=this.destPosition.getCopy();
+				 this.prevPosition.setType(CoordinateType.START);
 				 this.destPosition.action(cmd.charAt(0));
 				 this.destPosition.setType(CoordinateType.END);
 				 return true;

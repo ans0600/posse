@@ -25,6 +25,7 @@ public abstract class Mower {
 	
 	protected Lawn lawn;
 	protected MowerCoordinate initPosition;
+	protected MowerCoordinate prevPosition;
 	protected MowerCoordinate destPosition;
 	
 	protected LinkedList<FootPrint> footPrint;
@@ -36,6 +37,7 @@ public abstract class Mower {
 	{
 		this.initPosition=initPosition;
 		this.destPosition=this.initPosition.getCopy();
+		this.prevPosition=this.initPosition.getCopy();
 		this.destPosition.setType(CoordinateType.END);
 		this.command=new LinkedList<String>();
 	}
@@ -60,6 +62,10 @@ public abstract class Mower {
 	
 	public MowerCoordinate getCurrentLocation() {
 		return this.destPosition;
+	}
+	
+	public MowerCoordinate getPrevLocation() {
+		return this.prevPosition;
 	}
 	
 	public Queue<String> getCommand()

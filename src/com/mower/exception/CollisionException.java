@@ -26,7 +26,6 @@ public class CollisionException extends FatalException {
 		this.mower=m;
 		this.coordinate=c;
 		this.collisionType=type;
-		System.err.println("INit"+m.toString());
 	}
 
 //	public void setCoordinate(Coordinate coordinate) {

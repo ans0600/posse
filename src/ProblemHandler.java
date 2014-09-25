@@ -2,11 +2,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import com.mower.StandardMower;
-import com.mower.exception.FatalException;
-import com.mower.lawn.Coordinate;
-import com.mower.lawn.Lawn;
-import com.mower.lawn.MowerCoordinate;
 
 
 public abstract class ProblemHandler {

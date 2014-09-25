@@ -70,7 +70,7 @@ public class Lawn extends Grid  {
 					boolean res = m.executeCommand();
 					//System.err.println(i + " " + res);
 					hasCommand = hasCommand || res;
-					this.hasCollision(m);
+					if(hasCommand)this.hasCollision(m);
 				}
 
 			} while (hasCommand);
@@ -79,14 +79,19 @@ public class Lawn extends Grid  {
 	}
 
 	private boolean hasCollision(Mower m) {
-		return this.hasCollision(m, m.getInitPosition())
+		//System.err.println("init"+m.getInitPosition());
+//		System.err.println("-----"+m.getId());
+//		System.err.println("Prev"+m.getPrevLocation()+" "+m.getPrevLocation().getType());
+//		System.err.println("Curr"+m.getCurrentLocation()+" "+m.getCurrentLocation().getType());
+//		System.err.println("-----\n");
+		return this.hasCollision(m, m.getPrevLocation())
 				|| this.hasCollision(m, m.getCurrentLocation());
 
 	}
 
 	private boolean hasCollision(Mower m, MowerCoordinate c) {
 		// System.err.println("Has Collision "+c.toString());
-		System.err.println("Mower!!"+m);
+		//System.err.println("Mower!!"+m);
 		if (this.coordinateSet.containsKey(c)) {
 			// System.err.println("Key Exist: " + c.toString());
 			MowerCoordinate existing = (MowerCoordinate) this.coordinateSet
@@ -96,7 +101,7 @@ public class Lawn extends Grid  {
 				this.collisions.add(new CollisionException(m, c.getCopy(),
 						CollisionType.BUMP));
 				return true;
-			} else if (Math.abs(c.getFacing() - existing.getFacing()) == 180) {
+			} else if (c.getFacing() != existing.getFacing()&&Math.abs(c.getFacing() - existing.getFacing()) % 180==0) {
 				// System.err.println("Collision Type B");
 				this.collisions.add(new CollisionException(m, c.getCopy(),
 						CollisionType.RUNOVER));

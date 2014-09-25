@@ -22,6 +22,8 @@ public class Part2ProblemHandler extends ProblemHandler {
 		{
 			this.lawn.autoTaskMowers(numOfMowers);
 			
+			System.err.println(this.lawn.getMowers().size());
+			
 			for(Mower mower:this.lawn.getMowers())
 			{
 				System.out.println(mower.getInitPosition());

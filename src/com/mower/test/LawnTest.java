@@ -55,6 +55,12 @@ public class LawnTest {
 		this.mower4=new StandardMower(new MowerCoordinate(0,2,180));
 		this.mower5=new StandardMower(new MowerCoordinate(0,0,0));
 		this.mower6=new StandardMower(new MowerCoordinate(0,1,0));
+		this.mower1.setId(1);
+		this.mower2.setId(2);
+		this.mower3.setId(3);
+		this.mower4.setId(4);
+		this.mower5.setId(5);
+		this.mower6.setId(6);
 	}
 
 	@After
@@ -89,16 +95,13 @@ public class LawnTest {
 		lawn.addMower(mower4);
 		lawn.startMowers();
 				
-		assertTrue(lawn.getCollisions().size()==2);		
+		assertTrue(lawn.getCollisions().size()==1);		
 		for(int i=0;i<lawn.getCollisions().size();i++)
 		{
 			CollisionException ex=lawn.getCollisions().get(i);
-			if(ex.getMower()==mower3)
+			if(ex.getMower()==mower4)
 			{
-				assertTrue(ex.getCoordinate().equals(mower4.getCurrentLocation()));
-			}else if(ex.getMower()==mower4)
-			{				
-				assertTrue(ex.getCoordinate().equals(mower3.getCurrentLocation()));
+				assertTrue(ex.getCoordinate().equals(new MowerCoordinate(0,1,180)));
 			}else
 			{
 				fail("Unknown Mower in collision list");
@@ -123,16 +126,13 @@ public class LawnTest {
 		lawn.addMower(mower2);
 		lawn.startMowers();
 				
-		assertTrue(lawn.getCollisions().size()==2);		
+		assertTrue(lawn.getCollisions().size()==1);		
 		for(int i=0;i<lawn.getCollisions().size();i++)
 		{
 			CollisionException ex=lawn.getCollisions().get(i);
-			if(ex.getMower()==mower1)
+			if(ex.getMower()==mower2)
 			{
-				assertTrue(ex.getCoordinate().equals(mower2.getCurrentLocation()));
-			}else if(ex.getMower()==mower2)
-			{				
-				assertTrue(ex.getCoordinate().equals(mower1.getCurrentLocation()));
+				assertTrue(ex.getCoordinate().equals(new MowerCoordinate(2,1,270)));
 			}else
 			{
 				fail("Unknown Mower in collision list");
@@ -174,18 +174,15 @@ public class LawnTest {
 		lawn.addMower(mower6);
 		lawn.startMowers();
 				
-		assertTrue(lawn.getCollisions().size()==2);	
+		assertTrue(lawn.getCollisions().size()==1);	
 		
 		for(int i=0;i<lawn.getCollisions().size();i++)
 		{
 			CollisionException ex=lawn.getCollisions().get(i);
 			//System.err.println(ex.toString());
-			if(ex.getMower()==mower5)
+			if(ex.getMower()==mower6)
 			{
-				assertTrue(ex.getCoordinate().equals(mower6.getCurrentLocation()));
-			}else if(ex.getMower()==mower6)
-			{				
-				assertTrue(ex.getCoordinate().equals(mower5.getCurrentLocation()));
+				assertTrue(ex.getCoordinate().equals(new MowerCoordinate(0,1,0)));
 			}else
 			{
 				fail("Unknown Mower in collision list");
