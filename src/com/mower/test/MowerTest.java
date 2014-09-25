@@ -48,7 +48,7 @@ public class MowerTest {
 		
 		Mower mower=new StandardMower(lawn1, m1);
 		mower.mowLawn();
-		System.err.println(mower.getFootPrint().toString());
+	//	System.err.println(mower.getFootPrint().toString());
 		assertTrue(mower.getFootPrint().toString().equals("[M, M, R, M, M, R, M, M, R, M, R, M]"));
 	}
 	
@@ -57,7 +57,7 @@ public class MowerTest {
 		
 		Mower mower=new StandardMower(lawn2, m2);
 		mower.mowLawn();
-		System.err.println(mower.getFootPrint().toString());
+	//	System.err.println(mower.getFootPrint().toString());
 		assertTrue(mower.getFootPrint().toString().equals("[M, M, M, M]"));
 	}
 	
@@ -65,7 +65,7 @@ public class MowerTest {
 	public void testMowLawn3() {
 		Mower mower=new StandardMower(lawn3, m3);
 		mower.mowLawn();
-		System.err.println(mower.getFootPrint().toString());
+	//	System.err.println(mower.getFootPrint().toString());
 		assertTrue(mower.getFootPrint().toString().equals("[M, M, M, M, M, R, M, R, M, M, M, M, M]"));
 	}
 	
@@ -128,7 +128,7 @@ public class MowerTest {
 			mower.setCommandStr("MMM");
 			while(mower.executeCommand());
 			MowerCoordinate expectedLoc=new MowerCoordinate(3,0,90);
-			System.err.println(mower.getCurrentLocation().toString());
+			//System.err.println(mower.getCurrentLocation().toString());
 			assertTrue(mower.getCurrentLocation().equals(expectedLoc));
 			assertTrue(mower.getCurrentLocation().getFacing()==expectedLoc.getFacing());
 			assertTrue(mower.getCurrentLocation().getType().equals(CoordinateType.END));
@@ -137,7 +137,7 @@ public class MowerTest {
 			e.printStackTrace();
 		}
 	}
-//	
+	
 	@Test
 	public void testRotate() {
 		Mower mower=new StandardMower(lawn1, m1);

@@ -1,21 +1,15 @@
 package com.mower.test;
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import com.mower.Mower;
 import com.mower.StandardMower;
 import com.mower.exception.CollisionException;
 import com.mower.exception.FatalException;
-import com.mower.exception.CollisionException.CollisionType;
 import com.mower.lawn.Coordinate;
 import com.mower.lawn.Lawn;
 import com.mower.lawn.MowerCoordinate;
@@ -79,7 +73,7 @@ public class LawnTest {
 	public void testSet() {
 		HashMap<Coordinate, Coordinate> coordinateSet=new HashMap<Coordinate, Coordinate>();
 		coordinateSet.put(m1, m1);
-		System.err.println(coordinateSet.containsKey(m2));
+		assertFalse(coordinateSet.containsKey(m2));
 	}
 	
 	@Test

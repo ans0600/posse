@@ -1,11 +1,16 @@
 package com.mower.exception;
 
 import com.mower.Mower;
-import com.mower.lawn.Coordinate;
 import com.mower.lawn.MowerCoordinate;
 
 public class CollisionException extends FatalException {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
 	public enum CollisionType {
 		BUMP("bump into other mower(s)"),RUNOVER("run over other mower(s)");
 		private String value;
@@ -28,18 +33,6 @@ public class CollisionException extends FatalException {
 		this.collisionType=type;
 	}
 
-//	public void setCoordinate(Coordinate coordinate) {
-//		this.coordinate = coordinate;
-//	}
-//
-//	public void setMower(Mower mower) {
-//		this.mower = mower;
-//	}
-//	
-//	
-//	public void setCollisionType(CollisionType collisionType) {
-//		this.collisionType = collisionType;
-//	}
 	
 	public MowerCoordinate getCoordinate() {
 		return coordinate;
@@ -58,10 +51,6 @@ public class CollisionException extends FatalException {
 	public String toString() {
 		return "Mower ID:"+mower.getId()+" will "+collisionType.value+" at "+coordinate;
 	}
-
-
-
-	
 	
 
 }

@@ -2,6 +2,8 @@ package com.mower.exception;
 
 public class FatalException extends Exception {
 
+	private static final long serialVersionUID = 1L;
+	
 	private String message = null;
 
 	public FatalException() {

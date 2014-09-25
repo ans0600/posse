@@ -43,22 +43,18 @@ public class StandardMower extends Mower {
 	 }
 
 
-
+	 /**
+	  * Get the path to mow the entire lawn recursively
+	  */
 	public void mowLawn()
 	{
 		if(this.destPosition==null)this.destPosition=this.initPosition;
 		
-//		System.err.println(this.destPosition.toString());
-//		System.err.println(this.destPosition.getRotationCount());
-		
-		
 		MowerCoordinate pos=this.lawn.getAdjacentCoordinate(this.destPosition.getCopy());
-		
 		
 		if(pos==null&&this.destPosition.getRotationCount()==4)
 		{
 			//no more moves
-			//this.footPrint.removeLast();
 			while(this.footPrint.getLast().getCommand()=="R")
 			{
 				this.footPrint.removeLast();
@@ -79,5 +75,6 @@ public class StandardMower extends Mower {
 		}
 		this.mowLawn();
 	}
+	
 
 }

@@ -17,7 +17,15 @@ public abstract class Mower {
 		
 		private MowerCMD(char value)
 		{
-			this.value=value;
+			this.setValue(value);
+		}
+
+		public char getValue() {
+			return value;
+		}
+
+		public void setValue(char value) {
+			this.value = value;
 		}
 	}
 	
@@ -71,6 +79,24 @@ public abstract class Mower {
 	public Queue<String> getCommand()
 	{
 		return this.command;
+	}
+	
+	public String getCommandString(boolean optimized)
+	{
+		if(this.command!=null)
+		{
+			StringBuilder sb=new StringBuilder();
+			int count=0;
+			for(String s:this.command)
+			{
+				if(optimized&&!s.equals("M")&&count==this.command.size()-1)break;
+				sb.append(s);
+				count++;
+			}
+			return sb.toString();
+		}
+		return "";
+		
 	}
 	
 	public void setCurrentLocation(MowerCoordinate destPosition) {

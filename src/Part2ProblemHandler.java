@@ -18,16 +18,14 @@ public class Part2ProblemHandler extends ProblemHandler {
 
 	public void process(Object[] input) {
 		
-		if(this.readFile((String)input[1])&&lawn!=null&&numOfMowers!=0)
+		if(this.readFile((String)input[1])&&lawn!=null&&numOfMowers>0)
 		{
 			this.lawn.autoTaskMowers(numOfMowers);
-			
-			System.err.println(this.lawn.getMowers().size());
-			
+				
 			for(Mower mower:this.lawn.getMowers())
 			{
 				System.out.println(mower.getInitPosition());
-				System.out.println(mower.getCommand());
+				System.out.println(mower.getCommandString(true));
 			}
 			
 		}else
@@ -44,7 +42,7 @@ public class Part2ProblemHandler extends ProblemHandler {
 		try
 		{
 			String lineParts[]=line.split(" ");
-			if(lineParts.length==3)
+			if(lineParts.length==3&&Integer.parseInt(lineParts[0])>0&& Integer.parseInt(lineParts[1])>0)
 			{
 				this.lawn=new Lawn(new Coordinate(Integer.parseInt(lineParts[0]), Integer.parseInt(lineParts[1])));
 				this.numOfMowers=Integer.parseInt(lineParts[2]);
